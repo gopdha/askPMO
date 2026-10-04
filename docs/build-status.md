@@ -3,16 +3,18 @@
 Update this file at the start and end of every phase. Gate definitions: `docs/LLD.md`
 ("Phased build plan") and `config/gates.yaml`.
 
-| Phase | Status | Gate evidence (summary) | Commit |
-| --- | --- | --- | --- |
-| P0 Scaffold | Done (CI pending first push) | `make up` 6/6 healthy, `/api/ready` 200; lint clean; 23 unit + 2 integration tests pass | see git log |
-| P1 Ingestion | Not started | | |
-| P2 Baseline chat | Not started | | |
-| P3 Evaluation | Not started | | |
-| P4 Retrieval | Not started | | |
-| P5 Query and answer | Not started | | |
-| P6 Polish | Not started | | |
-| P7 Azure (on request only) | Not started | | |
+Timestamps are local time (CDT). "Updated" changes on every status change.
+
+| Phase | Status | Started | Finished | Updated | Gate evidence (summary) | Commit |
+| --- | --- | --- | --- | --- | --- | --- |
+| P0 Scaffold | Done (CI check in progress) | 2026-10-03 23:12 | 2026-10-03 23:31 | 2026-10-03 23:34 | `make up` 6/6 healthy, `/api/ready` 200; lint clean; 23 unit + 2 integration tests pass | f61073f |
+| P1 Ingestion | Not started | | | | | |
+| P2 Baseline chat | Not started | | | | | |
+| P3 Evaluation | Not started | | | | | |
+| P4 Retrieval | Not started | | | | | |
+| P5 Query and answer | Not started | | | | | |
+| P6 Polish | Not started | | | | | |
+| P7 Azure (on request only) | Not started | | | | | |
 
 ## Human checkpoints
 - [x] Before P1: `.env` complete (`make check-env` all green, 19/19 set — 2026-10-03)
@@ -43,4 +45,4 @@ Update this file at the start and end of every phase. Gate definitions: `docs/LL
 | Tests | `make test` | 23 passed |
 | Integration | `make test-int` | 2 passed (health via nginx, SPA served) |
 | Env | `make check-env` | 19/19 required variables set |
-| CI green | `.github/workflows/ci.yml` | **Pending**: runs on first push to `origin` (needs human OK to push) |
+| CI green | `.github/workflows/ci.yml` | Push approved by human 2026-10-03 23:33; result recorded below |
