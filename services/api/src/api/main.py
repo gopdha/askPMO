@@ -11,7 +11,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from api.routers import health, profiles
+from api.routers import documents, health, profiles
 from pmo_core import telemetry
 from pmo_core.container import Container, bootstrap, build_container
 from pmo_core.settings import get_settings
@@ -40,6 +40,7 @@ def create_app(
     app = FastAPI(title="askPMO API", version="0.1.0", lifespan=lifespan)
     app.include_router(health.router, prefix="/api")
     app.include_router(profiles.router, prefix="/api")
+    app.include_router(documents.router, prefix="/api")
 
     @app.exception_handler(StarletteHTTPException)
     async def http_problem(_: Request, exc: StarletteHTTPException) -> JSONResponse:

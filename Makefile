@@ -21,7 +21,7 @@ logs:
 	$(COMPOSE) logs -f
 
 check-env:
-	uv run python tools/check_env.py
+	uv run python tools/check_env.py tools/seed.py
 
 seed:
 	uv run python tools/seed.py
@@ -44,7 +44,7 @@ test-int:
 lint:
 	uv run ruff check .
 	uv run ruff format --check .
-	uv run mypy packages/pmo_core/src services/api/src services/worker/src services/eval/src tools/check_env.py
+	uv run mypy packages/pmo_core/src services/api/src services/worker/src services/eval/src tools/check_env.py tools/seed.py
 	$(WEB_RUN) sh -c "npm ci --no-audit --no-fund --loglevel=error && npm run lint && npm run typecheck"
 
 format:

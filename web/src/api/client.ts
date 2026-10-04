@@ -3,6 +3,14 @@ import type { components } from "./schema";
 
 export type ReadyOut = components["schemas"]["ReadyOut"];
 export type ProfileOut = components["schemas"]["ProfileOut"];
+export type DocumentOut = components["schemas"]["DocumentOut"];
+export type IngestJobOut = components["schemas"]["IngestJobOut"];
+export type UploadResponse = components["schemas"]["UploadResponse"];
+
+export interface UploadItem {
+  file: File;
+  relPath: string;
+}
 
 export async function getJson<T>(path: string): Promise<T> {
   const response = await fetch("/api" + path);
@@ -10,4 +18,18 @@ export async function getJson<T>(path: string): Promise<T> {
     throw new Error(response.status + " " + response.statusText);
   }
   return (await response.json()) as T;
+}
+
+export async function uploadFiles(items: UploadItem[]): Promise<UploadResponse> {
+  const form = new FormData();
+  for (const item of items) {
+    form.append("files[]", item.file, item.file.name);
+    form.append("rel_paths[]", item.relPath);
+  }
+  const response = await fetch("/api/documents", { method: "POST", body: form });
+  if (!response.ok) {
+    const problem = (await response.json().catch(() => null)) as { detail?: string } | null;
+    throw new Error(problem?.detail ?? response.status + " " + response.statusText);
+  }
+  return (await response.json()) as UploadResponse;
 }

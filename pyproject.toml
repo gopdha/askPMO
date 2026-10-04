@@ -18,7 +18,15 @@ askpmo-worker = { workspace = true }
 askpmo-eval = { workspace = true }
 
 [dependency-groups]
-dev = ["pytest", "pytest-asyncio", "ruff", "mypy", "types-PyYAML", "httpx"]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "ruff",
+    "mypy",
+    "types-PyYAML",
+    "httpx",
+    "testcontainers>=4.15.0",
+]
 
 [tool.ruff]
 line-length = 110
@@ -27,6 +35,7 @@ extend-exclude = ["tools/corpus_generator", "web", "docs", "*.md"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]
+ignore = ["RUF001", "RUF002", "RUF003"]  # corpus text uses en and em dashes deliberately
 
 [tool.ruff.lint.isort]
 known-first-party = ["pmo_core", "api", "worker", "eval", "tools", "tests"]

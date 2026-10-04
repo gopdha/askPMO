@@ -64,10 +64,143 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/documents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Documents
+         * @description All documents ordered by relative path.
+         */
+        get: operations["list_documents_api_documents_get"];
+        put?: never;
+        /**
+         * Upload Documents
+         * @description Store files, create one ingest job and enqueue it; unchanged re-uploads are skipped.
+         */
+        post: operations["upload_documents_api_documents_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ingest-jobs/{job_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Ingest Job
+         * @description Progress of one ingest job.
+         */
+        get: operations["get_ingest_job_api_ingest_jobs__job_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/chunks/{chunk_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Chunk
+         * @description Full chunk text and metadata, for a clicked citation.
+         */
+        get: operations["get_chunk_api_chunks__chunk_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** Body_upload_documents_api_documents_post */
+        Body_upload_documents_api_documents_post: {
+            /** Files[] */
+            "files[]": string[];
+            /** Rel Paths[] */
+            "rel_paths[]": string[];
+        };
+        /**
+         * ChunkOut
+         * @description Full chunk text and metadata, for a clicked citation.
+         */
+        ChunkOut: {
+            /** Chunk Id */
+            chunk_id: string;
+            /** Document Id */
+            document_id: string;
+            /** Text */
+            text: string;
+            /** Source */
+            source: string;
+            /** Section */
+            section: string;
+            /** Doc Type */
+            doc_type: string;
+            /** Doc Date */
+            doc_date: string | null;
+            /** Week */
+            week: number | null;
+            /** Ids */
+            ids: string[];
+        };
+        /**
+         * DocumentOut
+         * @description A stored document.
+         */
+        DocumentOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Filename */
+            filename: string;
+            /** Rel Path */
+            rel_path: string;
+            /** Doc Type */
+            doc_type: string | null;
+            /** Doc Date */
+            doc_date: string | null;
+            /** Week */
+            week: number | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "uploaded" | "indexed" | "failed";
+            /** Chunk Count */
+            chunk_count: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /** HTTPValidationError */
+        HTTPValidationError: {
+            /** Detail */
+            detail?: components["schemas"]["ValidationError"][];
+        };
         /**
          * HealthOut
          * @description Liveness.
@@ -78,6 +211,39 @@ export interface components {
              * @constant
              */
             status: "ok";
+        };
+        /**
+         * IngestJobOut
+         * @description Ingest job progress.
+         */
+        IngestJobOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "queued" | "running" | "succeeded" | "failed";
+            /** Document Ids */
+            document_ids: string[];
+            /** Documents Done */
+            documents_done: number;
+            /** Chunks Written */
+            chunks_written: number;
+            /** Error */
+            error: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Started At */
+            started_at: string | null;
+            /** Finished At */
+            finished_at: string | null;
         };
         /**
          * ProfileOut
@@ -115,6 +281,32 @@ export interface components {
             checks: {
                 [key: string]: components["schemas"]["ReadyCheck"];
             };
+        };
+        /**
+         * UploadResponse
+         * @description Result of an upload: one job for all accepted documents.
+         */
+        UploadResponse: {
+            /**
+             * Job Id
+             * Format: uuid
+             */
+            job_id: string;
+            /** Document Ids */
+            document_ids: string[];
+        };
+        /** ValidationError */
+        ValidationError: {
+            /** Location */
+            loc: (string | number)[];
+            /** Message */
+            msg: string;
+            /** Error Type */
+            type: string;
+            /** Input */
+            input?: unknown;
+            /** Context */
+            ctx?: Record<string, never>;
         };
     };
     responses: never;
@@ -190,6 +382,121 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ProfileOut"][];
+                };
+            };
+        };
+    };
+    list_documents_api_documents_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentOut"][];
+                };
+            };
+        };
+    };
+    upload_documents_api_documents_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_upload_documents_api_documents_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UploadResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_ingest_job_api_ingest_jobs__job_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IngestJobOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_chunk_api_chunks__chunk_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                chunk_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChunkOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

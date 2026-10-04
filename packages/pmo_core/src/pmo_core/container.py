@@ -10,7 +10,7 @@ import httpx
 from sqlalchemy import Engine
 
 from pmo_core import db
-from pmo_core.adapters.base import BlobStore, IndexBackend, JobQueue
+from pmo_core.adapters.base import BlobStore, Embedder, IndexBackend, JobQueue
 from pmo_core.settings import Profile, Settings, load_all_profiles
 
 
@@ -24,6 +24,7 @@ class Container:
     queue: JobQueue
     engine: Engine | None
     profiles: dict[str, Profile]
+    embedder: Embedder | None = None
     extra_checks: dict[str, Callable[[], None]] = field(default_factory=dict)
 
     def readiness(self) -> dict[str, dict[str, Any]]:
@@ -63,6 +64,7 @@ def check_foundry(settings: Settings) -> None:
 def build_container(settings: Settings) -> Container:
     """Build real adapters for the configured environment."""
     from pmo_core.adapters.index_qdrant import QdrantIndex
+    from pmo_core.adapters.llm import get_embeddings
     from pmo_core.adapters.storage_azure import AzureStorage
 
     if settings.index_backend != "qdrant":
@@ -81,6 +83,7 @@ def build_container(settings: Settings) -> Container:
         queue=storage,
         engine=db.make_engine(settings.database_url),
         profiles=load_all_profiles(),
+        embedder=get_embeddings(settings),
     )
 
 
@@ -92,3 +95,17 @@ def bootstrap(container: Container) -> None:
     container.index.ensure_schema()
     if isinstance(container.blobs, AzureStorage):
         container.blobs.ensure()
+
+
+def require_engine(container: Container) -> Engine:
+    """Return the database engine or fail clearly."""
+    if container.engine is None:
+        raise RuntimeError("database not configured")
+    return container.engine
+
+
+def require_embedder(container: Container) -> Embedder:
+    """Return the embedder or fail clearly."""
+    if container.embedder is None:
+        raise RuntimeError("embeddings not configured")
+    return container.embedder

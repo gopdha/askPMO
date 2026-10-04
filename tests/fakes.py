@@ -2,13 +2,51 @@
 
 from __future__ import annotations
 
+import hashlib
+import math
+from collections import Counter
 from collections.abc import Sequence
 
+from pmo_core.adapters import bm25
 from pmo_core.models import Candidate, Chunk, IndexFilter, QueueMessage
+
+FAKE_DIMENSIONS = 32
+
+
+class FakeEmbeddings:
+    """Deterministic hashed bag-of-words vectors (unit length)."""
+
+    def __init__(self, dimensions: int = FAKE_DIMENSIONS) -> None:
+        """Set the vector size."""
+        self.dimensions = dimensions
+        self.calls = 0
+
+    def embed_query(self, text: str) -> list[float]:
+        """Hash each token into a bucket, then normalize."""
+        vector = [0.0] * self.dimensions
+        for token in bm25.tokenize(text) or ["empty"]:
+            bucket = int(hashlib.md5(token.encode()).hexdigest(), 16) % self.dimensions
+            vector[bucket] += 1.0
+        norm = math.sqrt(sum(value * value for value in vector)) or 1.0
+        return [value / norm for value in vector]
+
+    def embed_documents(self, texts: list[str]) -> list[list[float]]:
+        """Embed each text."""
+        self.calls += 1
+        return [self.embed_query(text) for text in texts]
+
+
+def _matches(chunk: Chunk, flt: IndexFilter) -> bool:
+    """Same semantics as the Qdrant filter: any week or date; doc types required."""
+    if flt.doc_types and chunk.doc_type not in flt.doc_types:
+        return False
+    if not (flt.weeks or flt.dates):
+        return True
+    return (chunk.week in flt.weeks) or (chunk.doc_date in flt.dates)
 
 
 class FakeIndex:
-    """Dictionary-backed `IndexBackend` (search methods filled in with P1)."""
+    """Dictionary-backed `IndexBackend` with cosine dense search and BM25 keyword search."""
 
     def __init__(self, reachable: bool = True) -> None:
         """Start empty; `reachable=False` makes `ping` fail."""
@@ -39,12 +77,48 @@ class FakeIndex:
             del self.vectors[chunk_id]
 
     def dense_search(self, vector: list[float], k: int, flt: IndexFilter) -> list[Candidate]:
-        """Not needed before P1."""
-        raise NotImplementedError
+        """Cosine similarity over stored vectors."""
+        scored = []
+        for chunk_id, chunk in self.chunks.items():
+            if _matches(chunk, flt):
+                stored = self.vectors[chunk_id]
+                dot = sum(a * b for a, b in zip(vector, stored, strict=True))
+                norms = math.sqrt(sum(a * a for a in vector)) * math.sqrt(sum(b * b for b in stored)) or 1.0
+                scored.append((dot / norms, chunk))
+        scored.sort(key=lambda item: (-item[0], item[1].chunk_id))
+        return [
+            Candidate(chunk=chunk, dense_score=score, dense_rank=rank)
+            for rank, (score, chunk) in enumerate(scored[:k], start=1)
+        ]
 
     def keyword_search(self, query: str, k: int, flt: IndexFilter) -> list[Candidate]:
-        """Not needed before P1."""
-        raise NotImplementedError
+        """BM25 with IDF over the stored chunks (same encoder as Qdrant)."""
+        query_terms = set(bm25.encode_query(query).indices)
+        if not query_terms:
+            return []
+        doc_vectors = {cid: bm25.encode_document(chunk.text) for cid, chunk in self.chunks.items()}
+        doc_freq: Counter[int] = Counter()
+        for vector in doc_vectors.values():
+            doc_freq.update(set(vector.indices))
+        total = len(doc_vectors)
+        scored = []
+        for chunk_id, vector in doc_vectors.items():
+            chunk = self.chunks[chunk_id]
+            if not _matches(chunk, flt):
+                continue
+            weights = dict(zip(vector.indices, vector.values, strict=True))
+            score = sum(
+                weights[term] * math.log(1 + (total - doc_freq[term] + 0.5) / (doc_freq[term] + 0.5))
+                for term in query_terms
+                if term in weights
+            )
+            if score > 0:
+                scored.append((score, chunk))
+        scored.sort(key=lambda item: (-item[0], item[1].chunk_id))
+        return [
+            Candidate(chunk=chunk, keyword_score=score, keyword_rank=rank)
+            for rank, (score, chunk) in enumerate(scored[:k], start=1)
+        ]
 
     def get_chunk(self, chunk_id: str) -> Chunk | None:
         """Look up a chunk."""

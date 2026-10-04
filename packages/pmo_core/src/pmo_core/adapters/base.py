@@ -70,3 +70,15 @@ class JobQueue(Protocol):
     def delete(self, msg: QueueMessage) -> None:
         """Delete a processed message."""
         ...
+
+
+class Embedder(Protocol):
+    """Embedding model (LangChain `Embeddings`-compatible)."""
+
+    def embed_documents(self, texts: list[str]) -> list[list[float]]:
+        """Embed many texts."""
+        ...
+
+    def embed_query(self, text: str) -> list[float]:
+        """Embed one query."""
+        ...
