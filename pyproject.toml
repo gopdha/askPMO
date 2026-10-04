@@ -1,0 +1,42 @@
+[project]
+name = "askpmo"
+version = "0.1.0"
+description = "askPMO: RAG assistant for program documents"
+requires-python = ">=3.11,<3.12"
+dependencies = ["pmo-core", "askpmo-api", "askpmo-worker", "askpmo-eval"]
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = ["packages/pmo_core", "services/api", "services/worker", "services/eval"]
+
+[tool.uv.sources]
+pmo-core = { workspace = true }
+askpmo-api = { workspace = true }
+askpmo-worker = { workspace = true }
+askpmo-eval = { workspace = true }
+
+[dependency-groups]
+dev = ["pytest", "pytest-asyncio", "ruff", "mypy", "types-PyYAML", "httpx"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+extend-exclude = ["tools/corpus_generator", "web", "docs", "*.md"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["pmo_core", "api", "worker", "eval", "tools", "tests"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["integration: needs the running Compose stack"]
+addopts = "-m 'not integration'"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+plugins = ["pydantic.mypy"]

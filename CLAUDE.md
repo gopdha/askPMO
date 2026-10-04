@@ -75,6 +75,7 @@ make split                         # once: eval/splits.json
 make eval PROFILES=full SPLIT=all  # golden-set run
 make gate RUN=<id> PHASE=P4        # gate check
 make test | test-int | lint | web-types
+make web-build | format             # SPA build in a Node container; ruff autofix + format
 ```
 
 ## Custom slash commands

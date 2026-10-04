@@ -1,0 +1,47 @@
+# Local stack. Only nginx (web) is published to the host, on port 8080.
+services:
+  postgres:
+    image: postgres:16.15-bookworm
+    environment: { POSTGRES_USER: pmo, POSTGRES_PASSWORD: pmo, POSTGRES_DB: pmo }
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U pmo"], interval: 5s, retries: 10 }
+
+  qdrant:
+    image: qdrant/qdrant:v1.19.1
+    volumes: [qdrant:/qdrant/storage]
+
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite:3.37.0
+    command: azurite --blobHost 0.0.0.0 --queueHost 0.0.0.0 --location /data --skipApiVersionCheck --loose
+    volumes: [azurite:/data]
+
+  api:
+    build: { context: ., dockerfile: services/api/Dockerfile }
+    env_file: .env
+    depends_on:
+      postgres: { condition: service_healthy }
+      qdrant: { condition: service_started }
+      azurite: { condition: service_started }
+    healthcheck: { test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"], interval: 10s, retries: 12, start_period: 20s }
+
+  worker:
+    build: { context: ., dockerfile: services/worker/Dockerfile }
+    command: python -m worker
+    env_file: .env
+    depends_on: { api: { condition: service_healthy } }   # api runs migrations and creates the index
+
+  eval:
+    build: { context: ., dockerfile: services/worker/Dockerfile }
+    entrypoint: ["python", "-m", "eval"]
+    env_file: .env
+    environment: { API_BASE_URL: "http://api:8000" }
+    volumes: [./eval:/app/eval]
+    profiles: [tools]                                      # not started by `up`
+
+  web:
+    build: { context: ., dockerfile: web/Dockerfile }
+    ports: ["8080:80"]
+    depends_on: { api: { condition: service_healthy } }
+    healthcheck: { test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1/"], interval: 10s, retries: 6 }
+
+volumes: { pgdata: {}, qdrant: {}, azurite: {} }

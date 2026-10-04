@@ -1,0 +1,7 @@
+# Overrides on top of full.yaml: dense leg only, final top 5 from the dense ranking.
+name: baseline
+rewrite:   { enabled: false }
+filter:    { enabled: false }
+retrieve:  { hybrid: false }
+rerank:    { enabled: false, recency_boost: 0.0 }
+guardrail: { enabled: false }

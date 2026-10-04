@@ -1,0 +1,7 @@
+# Overrides on top of full.yaml: dense + keyword fused by weighted RRF, final top 5 from fusion.
+name: hybrid
+rewrite:   { enabled: false }
+filter:    { enabled: false }
+retrieve:  { hybrid: true }
+rerank:    { enabled: false, recency_boost: 0.0 }
+guardrail: { enabled: false }

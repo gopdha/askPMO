@@ -1,0 +1,7 @@
+# Overrides on top of full.yaml: hybrid + cross-encoder rerank; no rewrite, filter, guardrail or recency.
+name: rerank
+rewrite:   { enabled: false }
+filter:    { enabled: false }
+retrieve:  { hybrid: true }
+rerank:    { enabled: true, recency_boost: 0.0 }
+guardrail: { enabled: false }

@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+.git
+.venv
+**/__pycache__
+**/node_modules
+web/dist
+eval/runs
+.mypy_cache
+.ruff_cache
+.pytest_cache
+docs
+corpus
+tools/corpus_generator

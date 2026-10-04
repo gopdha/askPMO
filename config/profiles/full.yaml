@@ -1,0 +1,12 @@
+name: full
+rewrite:   { enabled: true,  history_turns: 6, expansion: none }   # none | multi_query | hyde
+filter:    { enabled: true }
+retrieve:
+  hybrid: true                 # false = dense leg only
+  k_candidates: 30
+  rrf_k: 60
+  weights: { dense: 0.5, keyword: 0.5 }
+  id_keyword_weight: 0.7       # keyword weight when the query contains an item ID
+rerank:    { enabled: true, top_n: 5, recency_boost: 0.05, batch_size: 32 }
+guardrail: { enabled: true, threshold: 0.20 }
+generate:  { max_context_tokens: 3000, temperature: 0.0, max_output_tokens: 800 }
