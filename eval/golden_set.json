@@ -1,0 +1,1148 @@
+{
+  "name": "Project Atlas RAG golden set",
+  "version": "1.1",
+  "corpus_root": "corpus/",
+  "num_questions": 45,
+  "questions": [
+    {
+      "id": "Q01",
+      "category": "factual",
+      "question": "Who is the executive sponsor of Project Atlas?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Laura Bennett, CIO of Northwind Retail Group.",
+      "key_facts": [
+        "Laura Bennett"
+      ],
+      "evidence": [
+        {
+          "source": "01_governance/project_atlas_charter_v1.0.md",
+          "text": "Executive Sponsor: Laura Bennett, CIO"
+        }
+      ],
+      "features_tested": [
+        "dense"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q02",
+      "category": "factual",
+      "question": "Who leads the data migration workstream?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Marcus Chen (Cobalt Systems) leads WS2 – Data Migration.",
+      "key_facts": [
+        "Marcus Chen"
+      ],
+      "evidence": [
+        {
+          "source": "01_governance/project_atlas_charter_v1.0.md",
+          "text": "WS2 – Data Migration Marcus Chen"
+        },
+        {
+          "source": "05_meeting_minutes/2026-02-18_data_migration_deep_dive.md",
+          "text": "Marcus Chen, WS2 Data Migration Lead"
+        }
+      ],
+      "features_tested": [
+        "dense"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q03",
+      "category": "factual",
+      "question": "How long is the production cutover window?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "48 hours.",
+      "key_facts": [
+        "48"
+      ],
+      "evidence": [
+        {
+          "source": "01_governance/project_atlas_charter_v1.0.md",
+          "text": "within a 48-hour cutover window"
+        },
+        {
+          "source": "01_governance/cutover_strategy_v2.0.md",
+          "text": "inside the 48-hour window"
+        }
+      ],
+      "features_tested": [
+        "dense"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q04",
+      "category": "factual",
+      "question": "How much order history data needs to be migrated?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Approximately 2.3 TB of order history.",
+      "key_facts": [
+        "2.3 TB"
+      ],
+      "evidence": [
+        {
+          "source": "01_governance/project_atlas_charter_v1.0.md",
+          "text": "approximately 2.3 TB"
+        }
+      ],
+      "features_tested": [
+        "dense"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q05",
+      "category": "factual",
+      "question": "What are the recovery point and recovery time objectives for disaster recovery?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "RPO of 15 minutes and RTO of 4 hours, defined in CR-005 (Azure Central US DR region).",
+      "key_facts": [
+        "15 minutes",
+        "4 hours"
+      ],
+      "evidence": [
+        {
+          "source": "04_change_requests/CR-005_disaster_recovery_region.md",
+          "text": "Recovery Point Objective (RPO): 15 minutes"
+        },
+        {
+          "source": "05_meeting_minutes/2026-02-25_steerco_SC-02.md",
+          "text": "with an RPO of 15 minutes and an RTO of 4 hours"
+        }
+      ],
+      "features_tested": [
+        "dense"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q06",
+      "category": "table_pdf",
+      "question": "What are the response and resolution targets for a P1 incident during hypercare?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "P1 (order taking stopped in multiple stores or on e-commerce): 30-minute response, 4-hour resolution.",
+      "key_facts": [
+        "30 minutes",
+        "4 hours"
+      ],
+      "evidence": [
+        {
+          "source": "01_governance/SOW_NRG-COB-2026-01_project_atlas.pdf",
+          "text": "Order taking stopped in multiple stores or on e-commerce"
+        }
+      ],
+      "features_tested": [
+        "pdf_parsing",
+        "table"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q07",
+      "category": "table_pdf",
+      "question": "How much does Cobalt get paid when UAT is complete?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "$1,200,000 (25% of the fixed price), payment milestone PM-3, tied to M5 UAT complete.",
+      "key_facts": [
+        "1,200,000",
+        "25%"
+      ],
+      "evidence": [
+        {
+          "source": "01_governance/SOW_NRG-COB-2026-01_project_atlas.pdf",
+          "text": "M5 – UAT complete"
+        }
+      ],
+      "features_tested": [
+        "pdf_parsing",
+        "table"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q08",
+      "category": "exact_id",
+      "question": "What is the mitigation for RSK-014?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Weekly executive call with DataBridge (Kevin Walsh); service credits under SOW section 9.3; parallel evaluation of Azure Data Factory as a fallback, with a go/no-go on the fallback by 2026-04-24.",
+      "key_facts": [
+        "Kevin Walsh",
+        "9.3",
+        "Azure Data Factory",
+        "2026-04-24"
+      ],
+      "evidence": [
+        {
+          "source": "03_raid/raid_log_2026-04-03.csv",
+          "text": "Weekly executive call with DataBridge (Kevin Walsh)"
+        }
+      ],
+      "features_tested": [
+        "bm25",
+        "hybrid"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q09",
+      "category": "exact_id",
+      "question": "What does SOW section 9.3 say?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "It covers subcontractor delay service credits: 2% of DataBridge's monthly fees per full week of delay beyond a committed date, capped at 10%, with 100% passed through to Northwind as a reduction of Cobalt's next invoice.",
+      "key_facts": [
+        "2%",
+        "10%",
+        "pass"
+      ],
+      "evidence": [
+        {
+          "source": "01_governance/SOW_NRG-COB-2026-01_project_atlas.pdf",
+          "text": "Subcontractor delay service credits"
+        },
+        {
+          "source": "05_meeting_minutes/2026-03-11_databridge_vendor_review.md",
+          "text": "Under SOW section 9.3, service credits accrue at 2%"
+        }
+      ],
+      "features_tested": [
+        "bm25",
+        "hybrid",
+        "pdf_parsing"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q10",
+      "category": "exact_id",
+      "question": "Who owns RSK-016 and when is the related review scheduled?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "David Okafor owns RSK-016 (PCI DSS sign-off for payment integration). The QSA review is booked for 2026-04-14.",
+      "key_facts": [
+        "David Okafor",
+        "2026-04-14"
+      ],
+      "evidence": [
+        {
+          "source": "03_raid/raid_log_2026-04-03.csv",
+          "text": "QSA review booked for 2026-04-14"
+        },
+        {
+          "source": "05_meeting_minutes/2026-03-18_integration_sync.md",
+          "text": "booked for 2026-04-14 (RSK-016)"
+        }
+      ],
+      "features_tested": [
+        "bm25",
+        "hybrid"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q11",
+      "category": "exact_id",
+      "question": "What was ISS-012 and how was it fixed?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "TLS certificates in the SIT environment expired (2026-03-16), breaking integration tests for two days. Certificates were renewed and automated renewal enabled through Azure Key Vault; closed 2026-03-18.",
+      "key_facts": [
+        "certificate",
+        "Azure Key Vault"
+      ],
+      "evidence": [
+        {
+          "source": "03_raid/raid_log_2026-04-03.csv",
+          "text": "TLS certificates in the SIT environment expired"
+        },
+        {
+          "source": "05_meeting_minutes/2026-03-18_integration_sync.md",
+          "text": "TLS certificates expired in the SIT environment"
+        }
+      ],
+      "features_tested": [
+        "bm25",
+        "hybrid"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q12",
+      "category": "exact_id",
+      "question": "What is DEC-006?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "The decision to adopt a hybrid cutover: pre-migrate historical orders older than 90 days ahead of cutover and migrate only open orders, the last 90 days and the final delta in the 48-hour window. Decided at special SteerCo SC-03 on 2026-03-04.",
+      "key_facts": [
+        "hybrid",
+        "90 days",
+        "SC-03"
+      ],
+      "evidence": [
+        {
+          "source": "03_raid/raid_log_2026-04-03.csv",
+          "text": "Adopt hybrid cutover approach"
+        },
+        {
+          "source": "05_meeting_minutes/2026-03-04_steerco_SC-03_special.md",
+          "text": "DEC-006: Adopt the hybrid cutover approach"
+        }
+      ],
+      "features_tested": [
+        "bm25",
+        "hybrid"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q13",
+      "category": "exact_id",
+      "question": "What happened to CR-006?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "CR-006 (extra performance test cycle, $60,000, raised by Marcus Chen) was superseded by CR-007 and closed at SC-03 on 2026-03-04.",
+      "key_facts": [
+        "superseded",
+        "CR-007"
+      ],
+      "evidence": [
+        {
+          "source": "04_change_requests/change_log.md",
+          "text": "Superseded by CR-007"
+        },
+        {
+          "source": "05_meeting_minutes/2026-03-04_steerco_SC-03_special.md",
+          "text": "CR-006 is closed as superseded by CR-007"
+        }
+      ],
+      "features_tested": [
+        "bm25",
+        "hybrid"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q14",
+      "category": "paraphrase",
+      "question": "Are we worried about the migration tool supplier hitting their dates?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Yes. RSK-014 (High, open): DataBridge has slipped connector v3.2 from 2026-03-13 to 2026-04-30; further slippage would threaten mock run 1 and the 2026-08-17 go-live.",
+      "key_facts": [
+        "v3.2",
+        "2026-04-30"
+      ],
+      "evidence": [
+        {
+          "source": "03_raid/raid_log_2026-04-03.csv",
+          "text": "DataBridge Solutions has slipped delivery of Oracle connector v3.2"
+        }
+      ],
+      "features_tested": [
+        "dense",
+        "query_rewrite"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q15",
+      "category": "paraphrase",
+      "question": "Why could orders end up linked to the wrong shoppers after the move?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Because of duplicates in the legacy customer master (RSK-011): profiling found a 12% duplicate rate, which could break order-to-customer matching. It was reduced to 4.5% by week 11, with a target below 1% before mock run 1.",
+      "key_facts": [
+        "12%",
+        "customer master"
+      ],
+      "evidence": [
+        {
+          "source": "03_raid/raid_log_2026-04-03.csv",
+          "text": "12% duplicate rate in the Meridian customer master"
+        },
+        {
+          "source": "02_status_reports/status_report_wk11_2026-03-27.md",
+          "text": "Customer master duplicate rate reduced from 12% to 4.5%"
+        }
+      ],
+      "features_tested": [
+        "dense"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q16",
+      "category": "paraphrase",
+      "question": "What's our plan B if the migration vendor lets us down again?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Azure Data Factory is being evaluated as a fallback migration tool (ACT-024 proof of concept, due 2026-04-24, 40% complete as of 2026-04-03).",
+      "key_facts": [
+        "Azure Data Factory",
+        "2026-04-24"
+      ],
+      "evidence": [
+        {
+          "source": "03_raid/raid_log_2026-04-03.csv",
+          "text": "Build a proof of concept migrating one month of order history using Azure Data Factory"
+        },
+        {
+          "source": "02_status_reports/status_report_wk12_2026-04-03.md",
+          "text": "Azure Data Factory fallback proof of concept 40% complete"
+        }
+      ],
+      "features_tested": [
+        "dense",
+        "query_rewrite"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q17",
+      "category": "why_rerank",
+      "question": "Why was the go-live date moved?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "The 2026-02-17 performance test showed DataBridge Migrate (connector v3.1) at 18 GB/hour versus the 50 GB/hour needed to move 2.3 TB in the 48-hour window (ISS-009), and the v3.2 fix slipped to 2026-04-30. CR-007 moved go-live from 2026-06-15 to 2026-08-17 with a hybrid cutover.",
+      "key_facts": [
+        "18 GB",
+        "50 GB",
+        "CR-007"
+      ],
+      "evidence": [
+        {
+          "source": "04_change_requests/CR-007_go_live_replan.md",
+          "text": "sustained only 18 GB per hour"
+        },
+        {
+          "source": "05_meeting_minutes/2026-03-04_steerco_SC-03_special.md",
+          "text": "Go-live moves from 2026-06-15 to 2026-08-17"
+        }
+      ],
+      "features_tested": [
+        "rerank"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q18",
+      "category": "why_rerank",
+      "question": "Why was the loyalty integration request turned down?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "CR-008 was rejected at SC-04 (2026-03-25) because it would jeopardize the 2026-08-17 go-live and add $410,000 while WS2 is already over budget; loyalty changes were also out of scope in the charter. Deferred to Phase 2.",
+      "key_facts": [
+        "go-live",
+        "over budget",
+        "Phase 2"
+      ],
+      "evidence": [
+        {
+          "source": "05_meeting_minutes/2026-03-25_steerco_SC-04.md",
+          "text": "rejected CR-008 for Phase 1"
+        },
+        {
+          "source": "04_change_requests/CR-008_loyalty_module.md",
+          "text": "would put the re-planned go-live at risk"
+        }
+      ],
+      "features_tested": [
+        "rerank"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q19",
+      "category": "why_rerank",
+      "question": "Why is the data migration workstream over budget?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Extended DataBridge performance testing after ISS-009 and two additional data engineering contractors for the customer master cleansing sprint (RSK-011). WS2 is at 133.3% of planned spend to date.",
+      "key_facts": [
+        "performance testing",
+        "contractors",
+        "133"
+      ],
+      "evidence": [
+        {
+          "source": "06_finance_resourcing/budget_burn_report_2026-03.pdf",
+          "text": "two additional data engineering contractors engaged for the customer master cleansing sprint"
+        },
+        {
+          "source": "05_meeting_minutes/2026-03-25_steerco_SC-04.md",
+          "text": "two additional contractors for the customer master cleansing sprint"
+        }
+      ],
+      "features_tested": [
+        "rerank",
+        "pdf_parsing"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q20",
+      "category": "temporal",
+      "question": "What was the overall status in week 6, and why?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Red. The 2026-02-17 performance test achieved only 18 GB/hour vs 50 GB/hour required (ISS-009), putting the June 15 go-live at serious risk.",
+      "key_facts": [
+        "Red",
+        "18 GB"
+      ],
+      "evidence": [
+        {
+          "source": "02_status_reports/status_report_wk06_2026-02-20.md",
+          "text": "Overall status is Red. The data migration performance test"
+        }
+      ],
+      "features_tested": [
+        "metadata_filter"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q21",
+      "category": "temporal",
+      "question": "What was the program status in the report for the week ending 2026-02-06?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Amber (week 4): ExpressRoute provisioning delay (ISS-004) threatened M1, and DataBridge signalled a slip on connector v3.2 (RSK-014).",
+      "key_facts": [
+        "Amber",
+        "ExpressRoute"
+      ],
+      "evidence": [
+        {
+          "source": "02_status_reports/status_report_wk04_2026-02-06.md",
+          "text": "Overall status moved to Amber"
+        }
+      ],
+      "features_tested": [
+        "metadata_filter"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q22",
+      "category": "temporal",
+      "question": "When did the overall status first turn Red?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Week 6, the report for the week ending 2026-02-20, driven by the data migration throughput issue (ISS-009).",
+      "key_facts": [
+        "week 6",
+        "2026-02-20"
+      ],
+      "evidence": [
+        {
+          "source": "02_status_reports/status_report_wk06_2026-02-20.md",
+          "text": "Overall status is Red."
+        },
+        {
+          "source": "02_status_reports/status_report_wk05_2026-02-13.md",
+          "text": "Status remains Amber."
+        }
+      ],
+      "features_tested": [
+        "metadata_filter",
+        "multi_doc"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q23",
+      "category": "temporal",
+      "question": "What go-live date was being reported in the week 3 status report?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "2026-06-15 (the original baseline, before CR-007).",
+      "key_facts": [
+        "2026-06-15"
+      ],
+      "evidence": [
+        {
+          "source": "02_status_reports/status_report_wk03_2026-01-30.md",
+          "text": "Forecast go-live 2026-06-15"
+        }
+      ],
+      "features_tested": [
+        "metadata_filter"
+      ],
+      "trap": "Must NOT answer 2026-08-17; the question asks for the point-in-time value.",
+      "forbidden": [
+        "2026-08-17"
+      ]
+    },
+    {
+      "id": "Q24",
+      "category": "recency",
+      "question": "What is the current go-live date?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Monday 2026-08-17, approved through CR-007 at SC-03 on 2026-03-04 (originally 2026-06-15).",
+      "key_facts": [
+        "2026-08-17"
+      ],
+      "evidence": [
+        {
+          "source": "04_change_requests/CR-007_go_live_replan.md",
+          "text": "Move production go-live from 2026-06-15 to 2026-08-17"
+        },
+        {
+          "source": "02_status_reports/status_report_wk12_2026-04-03.md",
+          "text": "Go-live remains on track for 2026-08-17"
+        }
+      ],
+      "features_tested": [
+        "recency",
+        "rerank"
+      ],
+      "trap": "Charter and weeks 1-7 still say 2026-06-15.",
+      "forbidden": []
+    },
+    {
+      "id": "Q25",
+      "category": "recency",
+      "question": "What is the total approved budget now?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "$5,345,000: the $4,800,000 baseline plus CR-003 ($85K), CR-005 ($140K) and CR-007 ($320K).",
+      "key_facts": [
+        "5,345,000"
+      ],
+      "evidence": [
+        {
+          "source": "04_change_requests/change_log.md",
+          "text": "Revised approved budget $5,345,000"
+        },
+        {
+          "source": "06_finance_resourcing/budget_burn_report_2026-03.pdf",
+          "text": "The revised approved budget, including CR-003, CR-005 and CR-007, is $5,345,000"
+        }
+      ],
+      "features_tested": [
+        "recency"
+      ],
+      "trap": "Charter and SOW say $4,800,000.",
+      "forbidden": []
+    },
+    {
+      "id": "Q26",
+      "category": "recency",
+      "question": "When is data migration mock run 1 planned?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "2026-05-08 (re-planned by CR-007; originally 2026-03-20).",
+      "key_facts": [
+        "2026-05-08"
+      ],
+      "evidence": [
+        {
+          "source": "04_change_requests/CR-007_go_live_replan.md",
+          "text": "Data migration mock run 1 complete 2026-03-20 2026-05-08"
+        }
+      ],
+      "features_tested": [
+        "recency"
+      ],
+      "trap": "Charter says 2026-03-20.",
+      "forbidden": []
+    },
+    {
+      "id": "Q27",
+      "category": "recency",
+      "question": "Who is the lead data architect?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Ravi Shankar until his last day on 2026-04-17; Ana Gomez takes over as backfill, joining 2026-04-13 for a one-week overlap.",
+      "key_facts": [
+        "Ravi Shankar",
+        "Ana Gomez",
+        "2026-04-13"
+      ],
+      "evidence": [
+        {
+          "source": "06_finance_resourcing/resource_plan_v3.0.pdf",
+          "text": "Lead Data Architect (backfill)"
+        },
+        {
+          "source": "02_status_reports/status_report_wk12_2026-04-03.md",
+          "text": "Ana Gomez joins on 2026-04-13 as lead data architect"
+        }
+      ],
+      "features_tested": [
+        "recency",
+        "multi_doc"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q28",
+      "category": "recency",
+      "question": "What cutover approach is the program using?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "A hybrid cutover (cutover strategy v2.0, DEC-006): about 2.0 TB of history older than 90 days is pre-migrated; only ~300 GB (open orders, last 90 days, final delta) moves in the 48-hour window. It replaced the v1.0 big bang approach.",
+      "key_facts": [
+        "hybrid",
+        "90 days"
+      ],
+      "evidence": [
+        {
+          "source": "01_governance/cutover_strategy_v2.0.md",
+          "text": "Supersedes Version 1.0 (2026-02-02, \"big bang\" cutover)"
+        },
+        {
+          "source": "01_governance/cutover_strategy_v2.0.md",
+          "text": "Historical orders older than 90 days (approximately 2.0 TB)"
+        }
+      ],
+      "features_tested": [
+        "recency"
+      ],
+      "trap": "Week 4 status mentions the v1.0 big bang approach.",
+      "forbidden": []
+    },
+    {
+      "id": "Q29",
+      "category": "multi_hop",
+      "question": "Which open risks affect the workstream that is over budget?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "WS2 Data Migration is over budget (133.3% of plan). Its open risks are RSK-011 (customer master data quality, High), RSK-014 (DataBridge connector v3.2 slipping, High) and RSK-019 (lead data architect attrition, Medium). Open issue ISS-009 also sits in WS2.",
+      "key_facts": [
+        "RSK-011",
+        "RSK-014",
+        "RSK-019"
+      ],
+      "evidence": [
+        {
+          "source": "06_finance_resourcing/budget_burn_report_2026-03.pdf",
+          "text": "One workstream, WS2 Data Migration, breaches the 10% over-budget tolerance"
+        },
+        {
+          "source": "03_raid/raid_log_2026-04-03.csv",
+          "text": "Data quality in legacy customer master"
+        },
+        {
+          "source": "03_raid/raid_log_2026-04-03.csv",
+          "text": "DataBridge connector v3.2 delivery slipping"
+        },
+        {
+          "source": "03_raid/raid_log_2026-04-03.csv",
+          "text": "Lead data architect attrition"
+        }
+      ],
+      "features_tested": [
+        "multi_hop",
+        "pdf_parsing",
+        "bm25"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q30",
+      "category": "multi_hop",
+      "question": "Who approved CR-003, and why didn't it need the Steering Committee?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Tom Harris, the Client Program Director, approved it on 2026-02-11. Its $85,000 cost is below the $100,000 threshold and it had no milestone impact, so it fell within his delegated authority.",
+      "key_facts": [
+        "Tom Harris",
+        "100,000"
+      ],
+      "evidence": [
+        {
+          "source": "04_change_requests/CR-003_store_inventory_api.md",
+          "text": "Approved on 2026-02-11 by Tom Harris"
+        },
+        {
+          "source": "01_governance/project_atlas_charter_v1.0.md",
+          "text": "CRs with a cost impact below $100,000 and no milestone impact may be approved by the Client Program Director"
+        }
+      ],
+      "features_tested": [
+        "multi_hop"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q31",
+      "category": "multi_hop",
+      "question": "What is the WS4 budget after the inventory API change, and how much has it spent so far?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Revised WS4 budget is $885,000 (baseline $800,000 + $85,000 for CR-003). Actual spend to date is $245,000 against $230,000 planned (106.5%, within tolerance).",
+      "key_facts": [
+        "885",
+        "245"
+      ],
+      "evidence": [
+        {
+          "source": "04_change_requests/CR-003_store_inventory_api.md",
+          "text": "WS4 budget increases from $800,000 to $885,000"
+        },
+        {
+          "source": "06_finance_resourcing/budget_burn_report_2026-03.pdf",
+          "text": "Slightly ahead of plan because the store inventory availability API"
+        }
+      ],
+      "features_tested": [
+        "multi_hop",
+        "pdf_parsing"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q32",
+      "category": "multi_hop",
+      "question": "What alternative to waiting for the vendor fix was considered when the go-live was re-planned, and what would it have cost?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Option C at SC-03: switch to Azure Data Factory immediately, with go-live on 2026-09-28 and a cost of $510,000. Option B (hybrid cutover, $320,000) was chosen.",
+      "key_facts": [
+        "Azure Data Factory",
+        "510,000",
+        "2026-09-28"
+      ],
+      "evidence": [
+        {
+          "source": "05_meeting_minutes/2026-03-04_steerco_SC-03_special.md",
+          "text": "Switch to Azure Data Factory now"
+        }
+      ],
+      "features_tested": [
+        "multi_hop",
+        "rerank"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q33",
+      "category": "multi_hop",
+      "question": "Which workstream is the new lead data architect joining, who leads it, and when does she start?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Ana Gomez joins WS2 Data Migration, led by Marcus Chen, starting 2026-04-13.",
+      "key_facts": [
+        "Ana Gomez",
+        "WS2",
+        "Marcus Chen",
+        "2026-04-13"
+      ],
+      "evidence": [
+        {
+          "source": "06_finance_resourcing/resource_plan_v3.0.pdf",
+          "text": "Ana Gomez"
+        },
+        {
+          "source": "03_raid/raid_log_2026-04-03.csv",
+          "text": "backfill Ana Gomez joins on 2026-04-13"
+        }
+      ],
+      "features_tested": [
+        "multi_hop",
+        "pdf_parsing"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q34",
+      "category": "aggregation",
+      "question": "How many change requests have been approved, and what is their total cost?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Five: CR-001 ($0), CR-003 ($85,000), CR-004 ($0), CR-005 ($140,000) and CR-007 ($320,000), totalling $545,000.",
+      "key_facts": [
+        "5",
+        "545,000"
+      ],
+      "evidence": [
+        {
+          "source": "04_change_requests/change_log.md",
+          "text": "Move delivery sprints from 3-week to 2-week cadence"
+        },
+        {
+          "source": "04_change_requests/change_log.md",
+          "text": "Re-plan go-live to 2026-08-17 due to data migration throughput"
+        }
+      ],
+      "features_tested": [
+        "aggregation",
+        "table"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q35",
+      "category": "aggregation",
+      "question": "What is the forecast overrun at completion?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "$175,000 (3.3%) over the $5,345,000 revised budget, entirely in WS2 (EAC $5,520,000). DataBridge service credits could offset up to $48,000.",
+      "key_facts": [
+        "175,000",
+        "WS2"
+      ],
+      "evidence": [
+        {
+          "source": "06_finance_resourcing/budget_burn_report_2026-03.pdf",
+          "text": "The program is forecast to finish $175,000 (3.3%) over the revised budget"
+        }
+      ],
+      "features_tested": [
+        "aggregation",
+        "pdf_parsing"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q36",
+      "category": "aggregation",
+      "question": "By how many weeks did the go-live slip?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "9 weeks (2026-06-15 to 2026-08-17).",
+      "key_facts": [
+        "9 weeks"
+      ],
+      "evidence": [
+        {
+          "source": "04_change_requests/CR-007_go_live_replan.md",
+          "text": "Go-live moves 9 weeks"
+        }
+      ],
+      "features_tested": [
+        "aggregation"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q37",
+      "category": "distractor",
+      "question": "What was the original go-live date before it was moved?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "2026-06-15 for Project Atlas (moved to 2026-08-17).",
+      "key_facts": [
+        "2026-06-15"
+      ],
+      "evidence": [
+        {
+          "source": "04_change_requests/CR-007_go_live_replan.md",
+          "text": "Move production go-live from 2026-06-15 to 2026-08-17"
+        }
+      ],
+      "features_tested": [
+        "rerank",
+        "metadata_filter"
+      ],
+      "trap": "Helios lessons-learned says a go-live moved from 2024-09-09; that is a different project.",
+      "forbidden": [
+        "2024-09-09"
+      ]
+    },
+    {
+      "id": "Q38",
+      "category": "distractor",
+      "question": "How did the final program cost compare with the budget?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "Project Atlas is not finished. As of 2026-03-31, spend is $1,955,000 vs $1,870,000 planned to date, and the forecast at completion is $5,520,000 vs the $5,345,000 revised budget (+$175,000).",
+      "key_facts": [
+        "not finished",
+        "5,520,000"
+      ],
+      "evidence": [
+        {
+          "source": "06_finance_resourcing/budget_burn_report_2026-03.pdf",
+          "text": "Estimate at completion (EAC)"
+        }
+      ],
+      "features_tested": [
+        "rerank",
+        "groundedness"
+      ],
+      "trap": "Helios finished at $2.9M vs $2.5M budget; do not present that as Atlas.",
+      "forbidden": [
+        "2.9 million",
+        "$2.9"
+      ]
+    },
+    {
+      "id": "Q39",
+      "category": "no_answer",
+      "question": "What is Northwind's current share price?",
+      "chat_history": [],
+      "answerable": false,
+      "reference_answer": "Not in the documents. The assistant should say it can't find this.",
+      "key_facts": [],
+      "evidence": [],
+      "features_tested": [
+        "guardrail"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q40",
+      "category": "no_answer",
+      "question": "What is DataBridge's hourly rate for their solutions engineer?",
+      "chat_history": [],
+      "answerable": false,
+      "reference_answer": "Not in the documents. The SOW rate card covers Cobalt roles only.",
+      "key_facts": [],
+      "evidence": [],
+      "features_tested": [
+        "guardrail"
+      ],
+      "trap": "Rate card has Cobalt rates; must not borrow them for DataBridge.",
+      "forbidden": [
+        "$185",
+        "$175",
+        "$150",
+        "$48",
+        "$40"
+      ]
+    },
+    {
+      "id": "Q41",
+      "category": "no_answer",
+      "question": "When will Phase 2 go live?",
+      "chat_history": [],
+      "answerable": false,
+      "reference_answer": "Not in the documents. Only a Phase 2 loyalty business case due 2026-06-30 is mentioned.",
+      "key_facts": [],
+      "evidence": [],
+      "features_tested": [
+        "guardrail"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q42",
+      "category": "conversational",
+      "question": "What risks does he own?",
+      "chat_history": [
+        {
+          "role": "user",
+          "content": "Who is the program manager?"
+        },
+        {
+          "role": "assistant",
+          "content": "Arjun Mehta from Cobalt Systems is the program manager."
+        }
+      ],
+      "answerable": true,
+      "reference_answer": "Arjun Mehta owns RSK-014 (DataBridge connector v3.2 slipping, High) and RSK-021 (go-live slipping into the retail freeze, Low), both open.",
+      "key_facts": [
+        "RSK-014",
+        "RSK-021"
+      ],
+      "evidence": [
+        {
+          "source": "03_raid/raid_log_2026-04-03.csv",
+          "text": "Go-live slipping into retail freeze"
+        },
+        {
+          "source": "03_raid/raid_log_2026-04-03.csv",
+          "text": "DataBridge connector v3.2 delivery slipping"
+        }
+      ],
+      "features_tested": [
+        "history_aware",
+        "bm25"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q43",
+      "category": "conversational",
+      "question": "How much will it cost to run each month?",
+      "chat_history": [
+        {
+          "role": "user",
+          "content": "What is CR-005 about?"
+        },
+        {
+          "role": "assistant",
+          "content": "CR-005 adds Azure Central US as a disaster recovery region for the order management platform, approved at SC-02 for $140,000."
+        }
+      ],
+      "answerable": true,
+      "reference_answer": "About $9,500 per month in Azure run cost for the standby DR resources (on top of the $140,000 one-time change cost).",
+      "key_facts": [
+        "9,500"
+      ],
+      "evidence": [
+        {
+          "source": "04_change_requests/CR-005_disaster_recovery_region.md",
+          "text": "estimated Azure run cost of $9,500 per month"
+        },
+        {
+          "source": "05_meeting_minutes/2026-02-25_steerco_SC-02.md",
+          "text": "additional Azure run cost of about $9,500 per month"
+        }
+      ],
+      "features_tested": [
+        "history_aware"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q44",
+      "category": "table_pdf",
+      "question": "What percentage of its planned spend to date has the application modernization workstream used?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "90.4% (actual $470K vs planned $520K), due to two developer positions filled late in February.",
+      "key_facts": [
+        "90.4"
+      ],
+      "evidence": [
+        {
+          "source": "06_finance_resourcing/budget_burn_report_2026-03.pdf",
+          "text": "Under plan due to two open developer positions filled late in February"
+        }
+      ],
+      "features_tested": [
+        "pdf_parsing",
+        "table"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "Q45",
+      "category": "table_pdf",
+      "question": "How many data engineers are in the offshore data migration team?",
+      "chat_history": [],
+      "answerable": true,
+      "reference_answer": "6 data engineers in Chennai, plus 2 contractors for the cleansing sprint (Feb–Apr 2026).",
+      "key_facts": [
+        "6",
+        "2 contractors"
+      ],
+      "evidence": [
+        {
+          "source": "06_finance_resourcing/resource_plan_v3.0.pdf",
+          "text": "Plus 2 contractors for cleansing sprint"
+        }
+      ],
+      "features_tested": [
+        "pdf_parsing",
+        "table"
+      ],
+      "forbidden": []
+    }
+  ]
+}

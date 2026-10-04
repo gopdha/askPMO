@@ -1,0 +1,5 @@
+# USD per 1M tokens, per Foundry deployment. Update to your actual Azure pricing.
+# Used only to estimate cost per query in eval runs.
+deployments:
+  askpmo-gpt-5-mini:            { input: 0.25, output: 2.00 }
+  askpmo-text-embedding-3-small: { input: 0.02, output: 0.0 }

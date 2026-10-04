@@ -1,0 +1,13 @@
+.env
+.env.local
+.venv/
+__pycache__/
+*.pyc
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+node_modules/
+web/dist/
+eval/runs/
+.claude/settings.local.json
+.DS_Store

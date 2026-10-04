@@ -1,0 +1,54 @@
+# Thresholds used by `python -m eval gate RUN_ID --phase <P>`.
+# Metrics are aggregates over the run's split unless a category is named.
+version: 1
+phases:
+  P3:
+    description: Baseline is measured reproducibly
+    type: reproducibility          # compare two runs of the same profile and split
+    profile: baseline
+    split: all
+    max_abs_delta:
+      hit_at_5: 0.02
+      recall_at_5: 0.02
+      mrr: 0.02
+      ndcg_at_5: 0.02
+  P4:
+    description: Retrieval upgrades
+    profile: rerank
+    split: tune
+    min:
+      recall_at_5: 0.80
+      mrr: 0.75
+    categories:
+      exact_id:
+        min: { hit_at_5: 1.0 }
+  P5: &release
+    description: Release gates (PRD)
+    profile: full
+    splits: [test, all]            # must pass on both
+    min:
+      hit_at_5: 0.90
+      recall_at_5: 0.80
+      mrr: 0.75
+      ndcg_at_5: 0.75
+      key_facts_rate: 0.85         # over answerable questions
+      faithfulness: 0.90
+      answer_relevance: 0.85
+      answer_correctness: 0.80
+      abstention_correct_rate: 1.0 # unanswerable questions
+      trap_avoided_rate: 1.0       # questions with a trap
+    max:
+      false_abstention_rate: 0.05
+      p95_latency_ms: 6000
+      cost_per_query_usd: 0.02
+  P6: *release
+  P7:
+    description: Backend parity before Azure cutover
+    type: parity                   # compare a Qdrant run and an AI Search run
+    profile: full
+    split: all
+    max_abs_delta:
+      hit_at_5: 0.03
+      recall_at_5: 0.03
+      mrr: 0.03
+      ndcg_at_5: 0.03

@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(make:*)",
+      "Bash(docker compose:*)",
+      "Bash(docker ps:*)",
+      "Bash(docker logs:*)",
+      "Bash(uv:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(node:*)",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(pytest:*)",
+      "Bash(ruff:*)",
+      "Bash(mypy:*)",
+      "Bash(curl:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git checkout:*)",
+      "Bash(git branch:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(mkdir:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.local)",
+      "Bash(cat .env:*)",
+      "Bash(git push --force:*)",
+      "Bash(docker system prune:*)",
+      "Bash(rm -rf /:*)"
+    ]
+  }
+}
